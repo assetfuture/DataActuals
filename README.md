@@ -44,7 +44,7 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
 
 ## 4. Reporting and Notification
 
-- For accounts requiring follow-up post-extraction, notify the relevant **Customer Success Data Owner** once ingestion is complete.
+- For accounts requiring follow-up post-extraction, notify the relevant **Customer Success Account Owner** once ingestion is complete.
   
 - Confirm successful ingestion and move file from **To do** to **Complete** folder.
 
