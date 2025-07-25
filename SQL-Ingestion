@@ -1,0 +1,60 @@
+--Retirement Living Actuals Data update for Replacement Tasks, to be run after ingestion to
+--1) Flag replaced item as inactive
+--2) Insert new item as a separate entry
+
+--Project list
+--344 Uniting Care | TBD
+--349 Baldwin Living | x
+--351 RetireAustralia AUS | x
+--356 Catholic Healthcare | x
+--357 IRT Group | x
+--359 Royal Freemasons Benevolent Institution | x
+--361 Walka Grange | x
+--363 Great Lakes Aged & Invalid Care Association GLAICA | x
+--364 Christadelphian Aged Care | x
+--365 Gannon Lifestyle Group | x
+--367 Medi Aid Centre Foundation | x
+--369 Elermore Glen | x
+--370 Apollo Care | x
+--371 Blue Haven
+--372 Kensington Gardens | x
+--373 Vasey | x
+
+Update cur.[User]
+Set CurrentProject = 357
+---select * from cur.[User]
+Where Id = 1542
+
+
+----STEP 1 Check ActualData
+select *
+from dbo.ActualData(357)
+where itemreferenceid in (63648759)
+order by TransactionDate
+
+----STEP2 Insert new items
+Declare @CurrentProject AS Integer 
+
+Select @CurrentProject = CurrentProject
+From sel.Users
+Where DbUser = CURRENT_USER
+
+--Insert replaced item
+Insert val.Items (Area, Model, [ShortName], [Name], [Type], Quantity, Strategy, SurveyCondition, SurveyConditionDate, [Status], DutyFactor)
+Select DISTINCT i.Area, i.Model, i.[ShortName], i.[Name], i.[Type], i.Quantity, i.Strategy, 1, CAST(d.TransactionDate as Date) as [SurveyConditionDate], i.[Status], i.DutyFactor
+From dbo.ActualData(@CurrentProject) d join val.Items i on d.ReferenceId = i.Id
+Where d.TransactionType = 'Replacement' AND i.[Status] NOT IN ('D', 'I')
+
+--Mark replaced item inactive
+Update i
+Set i.[Status] = 'I', Notes = 'Deactivated-using actuals Jul25'
+---select * 
+From dbo.ActualData(357) d join val.Items i on d.ReferenceId = i.Id
+Where d.TransactionType = 'Replacement' AND i.[Status] NOT IN ('D', 'I')
+
+--Check what was inserted
+Select *
+From val.Items i join sel.Users u on i.CreatedById = u.Id
+Where i.CreatedWhen >= CAST(GETDATE() as Date) AND u.DbUser = CURRENT_USER
+
+
