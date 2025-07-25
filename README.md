@@ -10,7 +10,7 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
   - Validate file format, column headers, title naming conventions, currency formats, and date formats.
   
 - **Master Data Alignment**:
-  - Ensure that all **Client Item IDs** are mapped and consistent with the **AF Source**.
+  - Ensure that all **Client Item IDs** are mapped and consistent with the **AF ID**.
 
 - **Replacement Record Validation**:
   - Confirm that any replacement entries reference **active records** in the system (referential integrity).
