@@ -13,7 +13,7 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
   - Ensure that all **Client Item IDs** are mapped and consistent with the **AF ID**.
 
 - **Replacement Record Validation**:
-  - Confirm that any replacement entries reference **active records** in the system (referential integrity).
+  - Confirm that any replacement entries reference **active records** in the system.
 
 ---
 
@@ -24,14 +24,14 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
 - Specify the **Primary Key** associated with the relevant account for lineage tracking.
   
 - Ensure that **field names (column headers)** in the CSV align exactly with expected schema definitions.
-  - Example: `DATA_SHEET` should match the expected worksheet/tab name in the data model.
+  - Example: `DATA_SHEET` should match the expected worksheet/tab name in the data file.
 
 
 ---
 
 ## 3. SQL Data Load and Transformation
 
-- After Python processing, confirm that data has been successfully sync to the **dbo.DataActuals**.
+- After Python processing, confirm that data has been successfully load to the **dbo.DataActuals**.
 
 - For **replacement records**:
   - Perform **data deactivation** for old records.
@@ -39,7 +39,6 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
     - Set `SurveyCondition = 1`
     - Apply new `SurveyConditionDate`
 
-- Recommend to maintain a clear audit trail of changes.
 
 ---
 
@@ -47,9 +46,11 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
 
 - For accounts requiring follow-up post-extraction, notify the relevant **Customer Success Data Owner** once ingestion is complete.
   
-- Confirm successful ingestion, move file from **To do** to **Complete** folder.
+- Confirm successful ingestion and move file from **To do** to **Complete** folder.
 
 ---
 
 ## Notes
-**IRT** account require additional extraction steps after ingestion. 
+- Recommend to maintain a clear audit trail of changes.
+
+- **IRT** account require additional extraction steps after ingestion. 
