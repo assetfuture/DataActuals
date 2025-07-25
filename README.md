@@ -48,7 +48,7 @@ Before ingestion, perform data quality spot checks to ensure compliance with dat
   
 - Confirm successful ingestion and move file from **To do** to **Complete** folder.
 
---
+---
 
 ## Notes
 - Recommend to maintain a clear audit trail of changes.
