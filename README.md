@@ -1,25 +1,55 @@
 # DataActuals
 
+# Data Ingestion Process
+
 ## 1. Data Quality and Validation Checks (Pre-Ingestion)
 
-- Before ingestion, perform data quality spot checks to ensure compliance with data standards:
+Before ingestion, perform data quality spot checks to ensure compliance with data standards:
 
-**File Format Validation**
+- **Schema Conformance**:
   - Validate file format, column headers, title naming conventions, currency formats, and date formats.
+  
+- **Master Data Alignment**:
+  - Ensure that all **Client Item IDs** are mapped and consistent with the **Authoritative Source** (e.g., AF Item IDs in the reference database).
 
-### Master Data Alignment
-  - Ensure that all Client Item IDs are mapped and consistent with the Source (e.g., AF Item IDs in the reference database).
+- **Replacement Record Validation**:
+  - Confirm that any replacement entries reference **active records** in the system (referential integrity).
 
-### Replacement Record Validation
-  - Confirm that any replacement entries reference active records in the system.
+---
 
-## Step 2: Data Ingestion via Python 
+## 2. Data Ingestion via Python 
 
-- Place the validated file in the designated data landing zone linked to the Python ingestion process.
+- Place the validated file in the designated **folder** linked to the Python ingestion process.
+  
+- Specify the **Primary Key** associated with the relevant account for lineage tracking.
+  
+- Ensure that **field names (column headers)** in the CSV align exactly with expected schema definitions.
+  - Example: `DATA_SHEET` should match the expected worksheet/tab name in the data model.
 
-- Specify the Primary Key associated with the relevant account for lineage tracking.
 
-- Ensure that field names (column headers) in the CSV align exactly with expected schema definitions.
-          - Example: DATA_SHEET should match the expected worksheet/tab name in the data model.
+---
 
-- Maintain file and process metadata for auditability and traceability.
+## 3. SQL Data Load and Transformation
+
+- After Python processing, confirm that data has been successfully sync to the **dbo.DataActuals**.
+
+- For **replacement records**:
+  - Perform **data deactivation** for old records.
+  - Load new records with updated values:
+    - Set `SurveyCondition = 1`
+    - Apply new `SurveyConditionDate`
+
+- Recommend to maintain a clear audit trail of changes.
+
+---
+
+## 4. Reporting and Notification
+
+- For accounts requiring follow-up post-extraction, notify the relevant **Customer Success Data Owner** once ingestion is complete.
+  
+- Confirm successful ingestion, move file from **To do** to **Complete** folder.
+
+---
+
+## Notes
+**IRT** account require additional extraction steps after ingestion. 
