@@ -7,10 +7,10 @@
 ### File Format Validation
   - Validate file format, column headers, title naming conventions, currency formats, and date formats.
 
-# Master Data Alignment
+### Master Data Alignment
   - Ensure that all Client Item IDs are mapped and consistent with the Source (e.g., AF Item IDs in the reference database).
 
-# Replacement Record Validation
+### Replacement Record Validation
   - Confirm that any replacement entries reference active records in the system.
 
 ## Step 2: Data Ingestion via Python 
