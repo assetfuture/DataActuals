@@ -1,10 +1,10 @@
 # DataActuals
 
-## Step 1: Data Quality and Validation Checks (Pre-Ingestion)
+## 1. Data Quality and Validation Checks (Pre-Ingestion)
 
 - Before ingestion, perform data quality spot checks to ensure compliance with data standards:
 
-### File Format Validation
+**File Format Validation
   - Validate file format, column headers, title naming conventions, currency formats, and date formats.
 
 ### Master Data Alignment
